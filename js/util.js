@@ -19,11 +19,16 @@
     return Math.round((Math.random() * (max - min)) + min);
   };
 
+  var toArray = function (list) {
+    return Array.prototype.slice.call(list);
+  };
+
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
     isEscEvent: isEscEvent,
     getRandomArrayElement: getRandomArrayElement,
     getRandomInteger: getRandomInteger,
+    toArray: toArray,
   };
 
 
