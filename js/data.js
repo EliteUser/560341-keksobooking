@@ -91,7 +91,7 @@
 
 
   window.data = {
-    offersData: generateOffersData(),
+    offersData: generateOffersData,
   };
 
 })();

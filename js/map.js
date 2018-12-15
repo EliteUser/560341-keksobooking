@@ -23,15 +23,15 @@
     .content
     .querySelector('.map__pin');
 
-  var renderUserPin = function (offer, index) {
+  var renderUserPin = function (offer) {
     var pinElement = offerMapPinTemplate.cloneNode(true);
     var pinImage = pinElement.firstElementChild;
 
-    pinElement.dataset.index = index;
+    pinElement.dataset.index = offer.index;
     pinElement.style.top = (offer.location.y - PIN_HEIGHT) + 'px';
     pinElement.style.left = (offer.location.x - PIN_WIDTH / 2) + 'px';
 
-    pinImage.dataset.index = index;
+    pinImage.dataset.index = offer.index;
     pinImage.classList.add('map__pin-image');
     pinImage.src = offer.author.avatar;
     pinImage.alt = offer.offer.title;
@@ -43,7 +43,7 @@
     var offerMapPinsContainer = offerMap.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < offers.length; i++) {
-      fragment.appendChild(renderUserPin(offers[i], i));
+      fragment.appendChild(renderUserPin(offers[i]));
     }
 
     offerMapPinsContainer.appendChild(fragment);
@@ -105,6 +105,8 @@
     formAddressInput.value = getMainPinCoords();
   };
 
+  /* Включение / выключение всех инпутов у форм */
+
   var switchFormInputs = function (off) {
     var filterFormElements = window.util.toArray(document.querySelector('.map__filters').elements);
     var formFieldsets = window.util.toArray(adForm.querySelectorAll('fieldset'));
@@ -117,6 +119,8 @@
       elem.disabled = off;
     });
   };
+
+  /* Проверка на наличие ключа в полученных данных */
 
   var validateData = function (data, key) {
     data = data.slice();
@@ -133,8 +137,15 @@
 
   var renderOffers = function (data) {
     window.data.offersData = data;
+    window.data.offersData.forEach(function (elem, index) {
+      elem.index = index;
+    });
+
     renderUserPins(validateData(data, 'offer'));
+    window.sort.initializeFilters();
   };
+
+  /* Инициализация карты (перевод в активное состояние) */
 
   var initOfferMap = function () {
     if (!initialized) {
@@ -146,13 +157,22 @@
       window.backend.load(renderOffers);
       switchFormInputs(false);
       formAddressInput.value = getMainPinCoords();
+      window.picture.addPictureLoaders();
 
       offerMap.addEventListener('click', offerMapClickHandler);
     }
   };
 
+  /* Сброс состояния карты к неактивному*/
+
   var resetOfferMap = function () {
     initialized = false;
+
+    document.querySelector('.map__filters').reset();
+    document.querySelector('.ad-form-header__preview').firstElementChild.src = 'img/muffin-grey.svg';
+    document.querySelector('.ad-form__photo').firstElementChild.src = 'img/muffin-grey.svg';
+    document.querySelector('.ad-form__photo').firstElementChild.classList.add('visually-hidden');
+    window.picture.disablePictureDropzones();
 
     adForm.reset();
     adForm.classList.add('ad-form--disabled');
@@ -168,6 +188,8 @@
 
   window.map = {
     resetOfferMap: resetOfferMap,
+    removeUserPins: removeUserPins,
+    renderUserPins: renderUserPins,
   };
 
 

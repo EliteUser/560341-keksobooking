@@ -2,6 +2,12 @@
 
 (function () {
 
+  var HousingTypes = {
+    bungalo: 'Бунгало',
+    flat: 'Квартира',
+    house: 'Дом',
+    palace: 'Дворец',
+  };
 
   /* Карточка с объявлением пользователя */
 
@@ -55,7 +61,7 @@
     offerElement.querySelector('.popup__title').textContent = offer.offer.title;
     offerElement.querySelector('.popup__text--address').textContent = offer.offer.address;
     offerElement.querySelector('.popup__text--price').textContent = offer.offer.price + ' ₽/ночь';
-    offerElement.querySelector('.popup__type').textContent = offer.offer.type;
+    offerElement.querySelector('.popup__type').textContent = HousingTypes[offer.offer.type];
     offerElement.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
     offerElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.offer.checkin + ', выезд до ' + offer.offer.checkout;
     clearOfferFeatures(offerFeaturesList);
