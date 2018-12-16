@@ -136,8 +136,8 @@
   };
 
   var renderOffers = function (data) {
-    window.data.offersData = data;
-    window.data.offersData.forEach(function (elem, index) {
+    window.data = data;
+    window.data.forEach(function (elem, index) {
       elem.index = index;
     });
 
@@ -146,6 +146,32 @@
   };
 
   /* Инициализация карты (перевод в активное состояние) */
+  var errorMessageOverlayHandler = function () {
+    hideErrorMessage();
+  };
+
+  var errorMessageCloseEscHandler = function (evt) {
+    window.util.isEscEvent(evt, hideErrorMessage);
+  };
+
+  var showErrorMessage = function () {
+    var errorMessageElement = document.querySelector('#pin-error')
+      .content
+      .querySelector('.error')
+      .cloneNode(true);
+    document.body.appendChild(errorMessageElement);
+
+    errorMessageElement.addEventListener('click', errorMessageOverlayHandler);
+    document.addEventListener('keydown', errorMessageCloseEscHandler);
+  };
+
+  var hideErrorMessage = function () {
+    var message = document.querySelector('.error');
+
+    message.removeEventListener('click', errorMessageOverlayHandler);
+    document.removeEventListener('keydown', errorMessageCloseEscHandler);
+    document.body.removeChild(message);
+  };
 
   var initOfferMap = function () {
     if (!initialized) {
@@ -154,7 +180,7 @@
       offerMap.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
 
-      window.backend.load(renderOffers);
+      window.backend.load(renderOffers, showErrorMessage);
       switchFormInputs(false);
       formAddressInput.value = getMainPinCoords();
       window.picture.addPictureLoaders();

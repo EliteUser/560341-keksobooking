@@ -74,7 +74,7 @@
 
   var showUserOffer = function (target) {
     var offerIndex = target.dataset.index;
-    renderUserOffer(window.data.offersData[offerIndex]);
+    renderUserOffer(window.data[offerIndex]);
 
     var offerCardCloseButton = document.querySelector('.popup__close');
     offerCardCloseButton.addEventListener('click', offerCardCloseButtonClickHandler);

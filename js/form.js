@@ -2,7 +2,6 @@
 
 (function () {
 
-
   /* Отправка данных на сервер и показ сообщений */
 
   var adForm = document.querySelector('.ad-form');

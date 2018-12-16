@@ -7,7 +7,7 @@
 
   var initializeFilters = function () {
 
-    var MAX_OFFERS = 5;
+    var MAX_OFFERS = 10;
 
     var PRICE_LOW = 10000;
     var PRICE_MID = 50000;
@@ -20,7 +20,7 @@
 
     var mapFiltersChangeHandler = function () {
       window.offer.hideUserOffer();
-      var filteredData = window.data.offersData.slice();
+      var filteredData = window.data.slice();
 
       var activeFilters = window.util.toArray(offerMapFilters.querySelectorAll('select'))
         .filter(function (elem) {
