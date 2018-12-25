@@ -15,9 +15,12 @@
 
   var initialized = false;
 
-  /* Отрисовка пинов с объявлением */
-
+  var adForm = document.querySelector('.ad-form');
   var offerMap = document.querySelector('.map');
+  var mapPinMain = offerMap.querySelector('.map__pin--main');
+  var formAddressInput = adForm.querySelector('#address');
+
+  /* Отрисовка пинов с объявлением */
 
   var offerMapPinTemplate = document.querySelector('#pin')
     .content
@@ -87,10 +90,6 @@
 
   /* Инициализация карты и загрузка данных */
 
-  var adForm = document.querySelector('.ad-form');
-  var mapPinMain = offerMap.querySelector('.map__pin--main');
-  var formAddressInput = adForm.querySelector('#address');
-
   var getMainPinCoords = function () {
     var xCoord = parseInt(mapPinMain.style.left, 10) + parseInt(MAIN_PIN_WIDTH / 2, 10);
     var yCoord = parseInt(mapPinMain.style.top, 10) + parseInt(MAIN_PIN_HEIGHT, 10);
@@ -155,7 +154,8 @@
   };
 
   var showErrorMessage = function () {
-    var errorMessageElement = document.querySelector('#pin-error')
+    var errorMessageElement = document
+      .querySelector('#pin-error')
       .content
       .querySelector('.error')
       .cloneNode(true);

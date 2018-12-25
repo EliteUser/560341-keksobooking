@@ -23,12 +23,22 @@
     return Array.prototype.slice.call(list);
   };
 
+  var findNotAny = function (elem) {
+    return elem.value !== 'any';
+  };
+
+  var returnFilterTypeValue = function (elem) {
+    return {type: elem.id, value: elem.value};
+  };
+
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
     isEscEvent: isEscEvent,
     getRandomArrayElement: getRandomArrayElement,
     getRandomInteger: getRandomInteger,
     toArray: toArray,
+    findNotAny: findNotAny,
+    returnFilterTypeValue: returnFilterTypeValue,
   };
 
 

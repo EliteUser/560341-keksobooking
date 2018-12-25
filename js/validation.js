@@ -9,6 +9,13 @@
   var housingType = adForm.querySelector('#type');
   var priceInput = adForm.querySelector('#price');
 
+  var formTimeIn = adForm.querySelector('#timein');
+  var formTimeOut = adForm.querySelector('#timeout');
+
+  var formRoomNumber = adForm.querySelector('#room_number');
+  var formCapacity = adForm.querySelector('#capacity');
+  var formCapacityOptions = window.util.toArray(formCapacity.children);
+
   var setMinPrice = function () {
     var housingTypes = window.util.toArray(housingType.children);
 
@@ -23,9 +30,6 @@
   housingType.addEventListener('change', setMinPrice);
 
   /* Установка времени въезда / выезда */
-
-  var formTimeIn = adForm.querySelector('#timein');
-  var formTimeOut = adForm.querySelector('#timeout');
 
   var setAdTime = function (evt) {
     var target = evt.target;
@@ -52,67 +56,38 @@
 
   /* Заполнение полей количество комнат / мест*/
 
-  var formRoomNumber = adForm.querySelector('#room_number');
-  var formCapacity = adForm.querySelector('#capacity');
-  var formCapacityOptions = window.util.toArray(formCapacity.children);
+  var switchElement = function (elem, valid) {
+    var currentValue = parseInt(elem.value, 10);
 
-  /* switch надо как-то упростить, но я не знаю как (отличается вычислением условия) */
+    if (valid(currentValue)) {
+      elem.disabled = false;
+      elem.selected = true;
+    } else {
+      elem.disabled = true;
+    }
+  };
 
   var setCapacity = function () {
-    var value = parseInt(formRoomNumber.value, 10);
-    switch (value) {
-      case 1:
-        formCapacityOptions.forEach(function (elem) {
-          var elemValue = parseInt(elem.value, 10);
-          if (elemValue === 1) {
-            elem.disabled = false;
-            elem.selected = true;
-          } else {
-            elem.disabled = true;
-          }
-        });
+    var value = formRoomNumber.value;
 
-        break;
+    var ValueValidator = {
+      '1': function (elemValue) {
+        return (elemValue === 1);
+      },
+      '2': function (elemValue) {
+        return (elemValue === 1 || elemValue === 2);
+      },
+      '3': function (elemValue) {
+        return (elemValue !== 0);
+      },
+      '100': function (elemValue) {
+        return (elemValue === 0);
+      },
+    };
 
-      case 2:
-        formCapacityOptions.forEach(function (elem) {
-          var elemValue = parseInt(elem.value, 10);
-          if (elemValue === 1 || elemValue === 2) {
-            elem.disabled = false;
-            elem.selected = true;
-          } else {
-            elem.disabled = true;
-          }
-        });
-
-        break;
-
-      case 3:
-        formCapacityOptions.forEach(function (elem) {
-          var elemValue = parseInt(elem.value, 10);
-          if (elemValue !== 0) {
-            elem.disabled = false;
-            elem.selected = true;
-          } else {
-            elem.disabled = true;
-          }
-        });
-
-        break;
-
-      case 100:
-        formCapacityOptions.forEach(function (elem) {
-          var elemValue = parseInt(elem.value, 10);
-          if (elemValue === 0) {
-            elem.disabled = false;
-            elem.selected = true;
-          } else {
-            elem.disabled = true;
-          }
-        });
-
-        break;
-    }
+    formCapacityOptions.forEach(function (elem) {
+      switchElement(elem, ValueValidator[value]);
+    });
   };
 
   formRoomNumber.addEventListener('change', setCapacity);

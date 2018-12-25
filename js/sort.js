@@ -23,12 +23,8 @@
       var filteredData = window.data.slice();
 
       var activeFilters = window.util.toArray(offerMapFilters.querySelectorAll('select'))
-        .filter(function (elem) {
-          return elem.value !== 'any';
-        })
-        .map(function (elem) {
-          return {type: elem.id, value: elem.value};
-        });
+        .filter(window.util.findNotAny)
+        .map(window.util.returnFilterTypeValue);
 
       activeFilters.forEach(function (filter) {
         var currentFilterType = filter.type;

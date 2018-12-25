@@ -34,17 +34,22 @@
     node.appendChild(fragment);
   };
 
+  var createPhoto = function (picture) {
+    var photo = document.createElement('img');
+    photo.classList.add('popup__photo');
+    photo.width = 40;
+    photo.height = 40;
+    photo.src = picture;
+    photo.alt = 'Фотография жилья';
+
+    return photo;
+  };
+
   var renderOfferPhotos = function (node, photos) {
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < photos.length; i++) {
-      var photo = document.createElement('img');
-      photo.classList.add('popup__photo');
-      photo.width = 40;
-      photo.height = 40;
-      photo.src = photos[i];
-      photo.alt = 'Фотография жилья';
-
+      var photo = createPhoto(photos[i]);
       fragment.appendChild(photo);
     }
 
