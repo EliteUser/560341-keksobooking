@@ -3,10 +3,8 @@
 (function () {
 
 
-  var ESC_KEYCODE = 27;
-
   var isEscEvent = function (evt, action) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.constants.ESC_KEYCODE) {
       action();
     }
   };
@@ -23,6 +21,10 @@
     return Array.prototype.slice.call(list);
   };
 
+  var parseIntDec = function (number) {
+    return parseInt(number, 10);
+  };
+
   var findNotAny = function (elem) {
     return elem.value !== 'any';
   };
@@ -32,10 +34,10 @@
   };
 
   window.util = {
-    ESC_KEYCODE: ESC_KEYCODE,
     isEscEvent: isEscEvent,
     getRandomArrayElement: getRandomArrayElement,
     getRandomInteger: getRandomInteger,
+    parseIntDec: parseIntDec,
     toArray: toArray,
     findNotAny: findNotAny,
     returnFilterTypeValue: returnFilterTypeValue,

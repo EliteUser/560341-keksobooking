@@ -2,6 +2,7 @@
 
 (function () {
 
+
   var HousingTypes = {
     bungalo: 'Бунгало',
     flat: 'Квартира',

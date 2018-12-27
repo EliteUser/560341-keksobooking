@@ -5,24 +5,6 @@
 
   /* Генерация данных с объявлениями */
 
-  var OFFER_QUANTITY = 8;
-  var OFFER_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-  var OFFER_MIN_PRICE = 1000;
-  var OFFER_MAX_PRICE = 1000000;
-  var OFFER_TYPES = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
-  var OFFER_MAX_ROOMS = 5;
-  var OFFER_MAX_GUESTS = 20;
-  var OFFER_CHECKIN_TIMES = ['12:00', '13:00', '14:00'];
-  var OFFER_CHECKOUT_TIMES = ['12:00', '13:00', '14:00'];
-  var OFFER_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var OFFER_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-
-  var PIN_WIDTH = 50;
-  var OFFER_MIN_X = PIN_WIDTH / 2;
-  var OFFER_MAX_X = 1200 - PIN_WIDTH / 2;
-  var OFFER_MIN_Y = 130;
-  var OFFER_MAX_Y = 630;
-
   var createOfferElement = function (index, avatar, title, price, type, rooms, guests, checkin, checkout, features, description, photos, x, y) {
     return {
       index: index,
@@ -68,21 +50,21 @@
   var generateOffersData = function () {
     var data = [];
 
-    for (var i = 0; i < OFFER_QUANTITY; i++) {
+    for (var i = 0; i < window.constants.OFFER.QUANTITY; i++) {
       var offerIndex = i;
       var offerAvatar = 'img/avatars/user0' + (i + 1) + '.png';
-      var offerTitle = OFFER_TITLES[i];
-      var offerPrice = window.util.getRandomInteger(OFFER_MIN_PRICE, OFFER_MAX_PRICE);
-      var offerType = window.util.getRandomArrayElement(OFFER_TYPES);
-      var offerRooms = window.util.getRandomInteger(1, OFFER_MAX_ROOMS);
-      var offerGuests = window.util.getRandomInteger(1, OFFER_MAX_GUESTS);
-      var offerCheckin = window.util.getRandomArrayElement(OFFER_CHECKIN_TIMES);
-      var offerCheckout = window.util.getRandomArrayElement(OFFER_CHECKOUT_TIMES);
-      var offerFeatures = generateOfferFeatures(OFFER_FEATURES);
+      var offerTitle = window.constants.OFFER.TITLES[i];
+      var offerPrice = window.util.getRandomInteger(window.constants.OFFER.MIN_PRICE, window.constants.OFFER.MAX_PRICE);
+      var offerType = window.util.getRandomArrayElement(window.constants.OFFER.TYPES);
+      var offerRooms = window.util.getRandomInteger(1, window.constants.OFFER.MAX_ROOMS);
+      var offerGuests = window.util.getRandomInteger(1, window.constants.OFFER.MAX_GUESTS);
+      var offerCheckin = window.util.getRandomArrayElement(window.constants.OFFER.CHECKIN_TIMES);
+      var offerCheckout = window.util.getRandomArrayElement(window.constants.OFFER.CHECKOUT_TIMES);
+      var offerFeatures = generateOfferFeatures(window.constants.OFFER.FEATURES);
       var offerDescription = '';
-      var offerPhotos = OFFER_PHOTOS;
-      var offerX = window.util.getRandomInteger(OFFER_MIN_X, OFFER_MAX_X);
-      var offerY = window.util.getRandomInteger(OFFER_MIN_Y, OFFER_MAX_Y);
+      var offerPhotos = window.constants.OFFER.PHOTOS;
+      var offerX = window.util.getRandomInteger(window.constants.OFFER.MIN_X, window.constants.OFFER.MAX_X);
+      var offerY = window.util.getRandomInteger(window.constants.OFFER.MIN_Y, window.constants.OFFER.MAX_Y);
       data.push(createOfferElement(offerIndex, offerAvatar, offerTitle, offerPrice, offerType, offerRooms, offerGuests, offerCheckin, offerCheckout, offerFeatures, offerDescription, offerPhotos, offerX, offerY));
     }
 

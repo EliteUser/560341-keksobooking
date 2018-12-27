@@ -6,12 +6,6 @@
   /* Добавление фильтра объявлений на карте*/
 
   var initializeFilters = function () {
-
-    var MAX_OFFERS = 10;
-
-    var PRICE_LOW = 10000;
-    var PRICE_MID = 50000;
-
     var offerMap = document.querySelector('.map');
     var offerMapFilters = offerMap.querySelector('.map__filters');
     var filterFeatures = offerMapFilters.querySelectorAll('.map__checkbox');
@@ -33,13 +27,13 @@
         if (currentFilterType === 'housing-price') {
           var FilterPrice = {
             'low': function (price) {
-              return (price <= PRICE_LOW);
+              return (price <= window.constants.PRICE.LOW);
             },
             'middle': function (price) {
-              return (price > PRICE_LOW && price <= PRICE_MID);
+              return (price > window.constants.PRICE.LOW && price <= window.constants.PRICE.MID);
             },
             'high': function (price) {
-              return (price > PRICE_MID);
+              return (price > window.constants.PRICE.MID);
             },
           };
         }
@@ -52,10 +46,10 @@
             return FilterPrice[currentFilterValue](elem.offer.price);
           },
           'housing-rooms': function (elem) {
-            return elem.offer.rooms === parseInt(currentFilterValue, 10);
+            return elem.offer.rooms === window.util.parseIntDec(currentFilterValue);
           },
           'housing-guests': function (elem) {
-            return elem.offer.guests === parseInt(currentFilterValue, 10);
+            return elem.offer.guests === window.util.parseIntDec(currentFilterValue);
           },
         };
 
@@ -65,7 +59,7 @@
       filteredData = filterByFeatures(filteredData);
 
       window.map.removeUserPins();
-      window.map.renderUserPins(filteredData.slice(0, MAX_OFFERS));
+      window.map.renderUserPins(filteredData.slice(0, window.constants.MAX_OFFERS));
     };
 
     /* Фильтрация по дополнительным возможностям (чекбоксы) */

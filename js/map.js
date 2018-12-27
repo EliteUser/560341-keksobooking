@@ -3,15 +3,6 @@
 
 (function () {
 
-  var PIN_DEFAULT_COORDS = {
-    X: 570,
-    Y: 375,
-  };
-
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
-  var MAIN_PIN_WIDTH = 64;
-  var MAIN_PIN_HEIGHT = 80;
 
   var initialized = false;
 
@@ -31,8 +22,8 @@
     var pinImage = pinElement.firstElementChild;
 
     pinElement.dataset.index = offer.index;
-    pinElement.style.top = (offer.location.y - PIN_HEIGHT) + 'px';
-    pinElement.style.left = (offer.location.x - PIN_WIDTH / 2) + 'px';
+    pinElement.style.top = (offer.location.y - window.constants.PIN.HEIGHT) + 'px';
+    pinElement.style.left = (offer.location.x - window.constants.PIN.WIDTH / 2) + 'px';
 
     pinImage.dataset.index = offer.index;
     pinImage.classList.add('map__pin-image');
@@ -91,8 +82,8 @@
   /* Инициализация карты и загрузка данных */
 
   var getMainPinCoords = function () {
-    var xCoord = parseInt(mapPinMain.style.left, 10) + parseInt(MAIN_PIN_WIDTH / 2, 10);
-    var yCoord = parseInt(mapPinMain.style.top, 10) + parseInt(MAIN_PIN_HEIGHT, 10);
+    var xCoord = parseInt(mapPinMain.style.left, 10) + parseInt(window.constants.MAIN_PIN.WIDTH / 2, 10);
+    var yCoord = parseInt(mapPinMain.style.top, 10) + parseInt(window.constants.MAIN_PIN.HEIGHT, 10);
 
     return xCoord + ', ' + yCoord;
   };
@@ -206,7 +197,7 @@
     window.offer.hideUserOffer();
     removeUserPins();
     switchFormInputs(true);
-    moveMainPin(null, PIN_DEFAULT_COORDS.X, PIN_DEFAULT_COORDS.Y);
+    moveMainPin(null, window.constants.MAIN_PIN.DEFAULT_COORDS.X, window.constants.MAIN_PIN.DEFAULT_COORDS.Y);
   };
 
   switchFormInputs(true);

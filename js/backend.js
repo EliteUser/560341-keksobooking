@@ -3,11 +3,6 @@
 (function () {
 
 
-  var DOWNLOAD_URL = 'https://js.dump.academy/keksobooking/data';
-  var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
-  var XHR_TIMEOUT = 10000;
-  var XHR_STATUS_OK = 200;
-
   var xhrErrorHandler = function (onError) {
     return function () {
       onError('Произошла ошибка соединения');
@@ -22,7 +17,7 @@
 
   var xhrHandler = function (xhr, onLoad, onError, message) {
     return function () {
-      if (xhr.status === XHR_STATUS_OK) {
+      if (xhr.status === window.constants.XHR.STATUS_OK) {
         onLoad(xhr.response);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText + '\n ' + message);
@@ -33,7 +28,7 @@
   var createXhrRequest = function (onLoad, onError, message) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.timeout = XHR_TIMEOUT;
+    xhr.timeout = window.constants.XHR.TIMEOUT;
 
     xhr.addEventListener('load', xhrHandler(xhr, onLoad, onError, message));
     xhr.addEventListener('error', xhrErrorHandler(onError));
@@ -45,14 +40,14 @@
   var load = function (onLoad, onError) {
     var xhr = createXhrRequest(onLoad, onError, 'Не удалось загрузить данные');
 
-    xhr.open('GET', DOWNLOAD_URL);
+    xhr.open('GET', window.constants.DOWNLOAD_URL);
     xhr.send();
   };
 
   var save = function (data, onLoad, onError) {
     var xhr = createXhrRequest(onLoad, onError, 'Не удалось отправить данные');
 
-    xhr.open('POST', UPLOAD_URL);
+    xhr.open('POST', window.constants.UPLOAD_URL);
     xhr.send(data);
   };
 
